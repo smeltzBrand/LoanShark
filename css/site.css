@@ -1,0 +1,66 @@
+:root{
+    --cf-dark-color: #292929;
+    --cf-light-color: #DEF3E4;
+    --cf-primary-color: #001e43;
+    --cf-secondary-color: #ff993b;
+}
+
+body{
+    color: var(--cf-dark-color);
+    font-size: 1.2rem;
+}
+
+.navFooterBg {
+    background-color: rgb(58,94,59) !important;
+
+}
+
+.logoStyle {
+    border-radius: 15px;
+    box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
+}
+
+main>.container {
+    padding: 60px 15px 0;
+    margin-bottom: 5rem;
+}
+
+.techicons {
+    font-size: 4rem;
+}
+
+.sticky-footer {
+    position: sticky;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--cf-dark-color);
+    color: white;
+}
+
+.socialicons>a {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.socialicons>a:hover {
+    color: lightgreen;
+}
+
+.checklist {
+    list-style: none;
+
+}
+
+.checklist i {
+    color: var(--cf-secondary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.messageStyle{
+    font-size: 1.5rem;
+    font-weight: bold;
+
+
+}
