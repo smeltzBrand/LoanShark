@@ -1,4 +1,3 @@
-
 //get the loans from page
 function getValues() {
     //step 1 get values from the page
@@ -6,14 +5,26 @@ function getValues() {
     let numPays = parseInt(document.getElementById("loanPayment").value, 10);
     let intRate = parseInt(document.getElementById("loanRate").value, 10);
 
+    if (isNaN(loanTotal) || loanTotal < 0){
+        Swal.fire("Oops!","Please enter a valid amount. Must be a number, greater than zero.");
+        document.getElementById("lamount").focus();
+    } else if (isNaN(numPays) || numPays < 0){
+        Swal.fire("Oops!","Please, enter a valid payment term. Must be the number of monthly payments for the loan, greater than zero.");
+        document.getElementById("lterm").focus();
+    } else if (isNaN(intRate) || intRate < 0){
+        Swal.fire("Oops!","Please enter a valid loan interest rate. Must be a valid number, greater than zero.");
+        document.getElementById("lrate").focus();
+    } else {
+
     //step 2 - calculate payment
-    let monPay = loanTotal*(intRate/1200)/(1 -(1+intRate/1200)**(-numPays))
+    let monPay = loanTotal * (intRate / 1200) / (1 - (1 + intRate / 1200) ** (-numPays))
 
     //call buildschedule
     let payments = buildSchedule(loanTotal, intRate, numPays, monPay);
 
     //call display data
     displayData(payments);
+    }
 
 }
 
@@ -35,23 +46,23 @@ function buildSchedule(amount, rate, term, monPayment) {
 
     for (let i = 1; i <= term; i++) {
         // do all calculations then push the object of results into the array
-        
+
         // loanInt would not recalculate if placed outside of for loop
         // as loanPrincipal dends on loanInt, it too had to be brought in
         let loanInt = loanBal * rate / 1200;
         let loanPrincipal = monPayment - loanInt;
-        
+
         let curPayment = {
-        month: i,
-        payment: monPayment,
-        principal: monPayment - loanInt, 
-        interest: loanInt,
-        totalInterest: totInt += loanInt,
-        balance: loanBal -= loanPrincipal,
+            month: i,
+            payment: monPayment,
+            principal: monPayment - loanInt,
+            interest: loanInt,
+            totalInterest: totInt += loanInt,
+            balance: loanBal -= loanPrincipal,
         };
 
         payments.push(curPayment);
-        
+
     }
 
     //return an array of payment objects
@@ -68,7 +79,7 @@ function displayData(payments) {
         style: "currency",
         currency: "USD",
     });
-    
+
     //amortBody.innerHTML = "";
 
     for (let i = 0; i < payments.length; i++) {
@@ -83,10 +94,10 @@ function displayData(payments) {
         amortCols[5].textContent = dollarUS.format(payments[i].balance);
 
         amortBody.appendChild(amortRow);
-        
+
     }
 
-    
+
 
     let loanTotal = parseInt(document.getElementById("loanAmount").value, 10);
     let totPrinc = document.getElementById("totalPrinc");
@@ -94,9 +105,12 @@ function displayData(payments) {
 
     let numPays = parseInt(document.getElementById("loanPayment").value, 10);
     let totInt = document.getElementById("totalInt");
-    totInt.innerHTML = dollarUS.format(payments[numPays -1].totalInterest);
+    totInt.innerHTML = dollarUS.format(payments[numPays - 1].totalInterest);
 
     let totCost = document.getElementById("totalCost");
-    totCost.innerHTML = dollarUS.format(loanTotal + payments[numPays -1].totalInterest);
+    totCost.innerHTML = dollarUS.format(loanTotal + payments[numPays - 1].totalInterest);
+
+    let monthPay = document.getElementById("monthPay");
+    monthPay.innerHTML = dollarUS.format(payments[1].payment);
 
 }
